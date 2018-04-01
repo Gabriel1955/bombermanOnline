@@ -28,16 +28,16 @@ window.onload = function main() {
 
         }
         else if(event.which == 38){ //up
-
+            player1.y -= player1.speed;
         }
         else if(event.which == 40){ //down
-            
+            player1.y += player1.speed;
         }
         else if(event.which == 37){ //left
-            
+            player1.x -= player1.speed;
         }
         else if(event.which == 39){ // reight
-            
+            player1.x += player1.speed;
         }
     });
     play();
@@ -52,7 +52,13 @@ function update() {
     frames++;
 }
 function print() {
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     blocks_solid.print();
+    player1.print();
+
+    
 }
 
 
