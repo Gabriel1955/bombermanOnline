@@ -1,55 +1,33 @@
-#!/usr/bin/php -q
+#!/usr/bin/env php
 <?php
-error_reporting(E_ALL);
-echo "Conexao TCP/IP em PHP\n";
-/* Defina a porta */
-$porta = 7776;
-/* Define o host */
-$host = gethostbyname("localhost");
-/* Crie um socket */
-$socket_servidor = socket_create(AF_INET, SOCK_STREAM, 0);
-if ($socket_servidor < 0) {
-    print "Nao foi possivel obter socket para conexao com $host\n";
-    exit;
+
+require_once('./websockets.php');
+
+class echoServer extends WebSocketServer {
+  //protected $maxBufferSize = 1048576; //1MB... overkill for an echo server, but potentially plausible for other applications.
+  
+  protected function process ($user, $message) {
+    $this->send($user,$message);
+  }
+  
+  protected function connected ($user) {
+    // Do nothing: This is just an echo server, there's no need to track the user.
+    // However, if we did care about the users, we would probably have a cookie to
+    // parse at this step, would be looking them up in permanent storage, etc.
+  }
+  
+  protected function closed ($user) {
+    // Do nothing: This is where cleanup would go, in case the user had any sort of
+    // open files or other objects associated with them.  This runs after the socket 
+    // has been closed, so there is no need to clean up the socket itself here.
+  }
 }
-/* De um bind na porta */
-$bind = socket_bind($socket_servidor, $host, $porta);
-if ($bind < 0) {
-    print "Nao foi possivel fazer BIND no $host:$porta\n";
-    exit;
+
+$echo = new echoServer("192.168.0.104","7778");
+
+try {
+  $echo->run();
 }
-$listen = socket_listen($socket_servidor, 5);
-if ($listen < 0) {
-    print "Nao foi possivel fazer LISTEN no $host:$porta\n";
-    exit;
+catch (Exception $e) {
+  $echo->stdout($e->getMessage());
 }
-$conexao = 0;
-print "Aguardando conexoes na porta $porta\n";
-while (true) {
-    $socket_cliente = socket_accept($socket_servidor);
-    if ($socket_cliente < 0) {
-        print "Nao foi possivel aceitar conexao com cliente remoto\n";
-        break;
-    }
-    $conexao++;
-    print "Conexao numero $conexao\n";
-    $funcao = socket_read($socket_cliente, 8);
-    if ($funcao) {
-        print "Funcao: $funcao\n";
-        if ($funcao == 'LER') {
-            $msgler = "Funcao Ler";
-            socket_write($socket_cliente, $msgler, strlen($msgler));
-        } else if ($funcao == 'ESCREVER') {
-            $msg = socket_read($socket_cliente, 100);
-            if ($msg) {
-                print "Mensagem recebida: $msg\n";
-            }
-        } else {
-            print "Funcao nao implementada $funcao\n";
-        }
-        socket_close($socket_cliente);
-    }
-}
-socket_close($socket_servidor);
-print "Servidor saindo...\n";
-?>

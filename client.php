@@ -4,9 +4,9 @@
 error_reporting(E_ALL);
 echo "Conexao TCP/IP em PHP\n";
 /* Defina a porta */
-$porta = 12000;
+$porta = 7776;
 /* Define o host */
-$host = gethostbyname("NOMESERVIDOR");
+$host = "192.168.0.104";
 /* Crie um socket */
 $funcao = array("LER", "ESCREVER");
 for ($n = 0; $n < 2; $n++) {

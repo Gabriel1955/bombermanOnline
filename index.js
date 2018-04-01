@@ -21,7 +21,7 @@ window.onload = function main(){
     ctx = canvas.getContext("2d");
     document.body.appendChild(canvas);
 
-    document.addEventListener("mousedown", click);
+    //document.addEventListener("mousedown", click);
 
 }
 
@@ -36,3 +36,4 @@ function update(){
 function print(){
 
 }
+//////////////////////////////////////////////////////////WEBSOCKET
