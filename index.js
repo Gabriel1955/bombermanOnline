@@ -1,5 +1,5 @@
 var canvas, ctx, ALTURA, LARGURA, frames = 0,
-myPosition_X, myPosition_Y;
+myPosition_X = 100, myPosition_Y=100;
 
 function click(event) {
   
