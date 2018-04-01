@@ -1,8 +1,8 @@
 var canvas, ctx, ALTURA, LARGURA, frames = 0,
-myPosition_X = 100, myPosition_Y=100;
+    myPosition_X = 100, myPosition_Y = 100;
 
 function click(event) {
-  
+
 }
 window.onload = function main() {
     ALTURA = window.innerHeight;
@@ -22,21 +22,23 @@ window.onload = function main() {
     ctx = canvas.getContext("2d");
     document.body.appendChild(canvas);
 
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("keydown", function (event) {
         console.info(event.which);
-        if(event.which == 80){ //p
-            bomb.desenha();
+        if (event.which == 80) { //p
+            bomb.x = player1.x;
+            bomb.y = player1.y;
+            bomb.ativa = true;
         }
-        else if(event.which == 38){ //up
+        else if (event.which == 38) { //up
             player1.y -= player1.speed;
         }
-        else if(event.which == 40){ //down
+        else if (event.which == 40) { //down
             player1.y += player1.speed;
         }
-        else if(event.which == 37){ //left
+        else if (event.which == 37) { //left
             player1.x -= player1.speed;
         }
-        else if(event.which == 39){ // reight
+        else if (event.which == 39) { // reight
             player1.x += player1.speed;
         }
     });
@@ -52,13 +54,15 @@ function update() {
     frames++;
 }
 function print() {
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     blocks_solid.print();
     player1.print();
+    if (bomb.ativa) {
+        bomb.desenha();
+    }
 
-    
 }
 
 
