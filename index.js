@@ -28,9 +28,7 @@ window.onload = function main(){
 function play(){
     update();
     print();
-
     window.requestAnimationFrame(play);
-
 }
 function update(){
     frames++;
