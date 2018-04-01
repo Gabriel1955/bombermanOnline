@@ -1,3 +1,6 @@
+function teste(){
+    alert("teste")
+}
 function WebSocketTest()
          {
             if ("WebSocket" in window)

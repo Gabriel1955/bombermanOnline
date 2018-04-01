@@ -1,15 +1,14 @@
-var canvas, ctx, ALTURA, LARGURA, frames = 0;
+var canvas, ctx, ALTURA, LARGURA, frames = 0,
+myPosition_X, myPosition_Y;
 
-
-
-function click(event){
-    alert("test");
+function click(event) {
+  
 }
-window.onload = function main(){
+window.onload = function main() {
     ALTURA = window.innerHeight;
     LARGURA = window.innerWidth;
-    
-    if(LARGURA >= 500){
+
+    if (LARGURA >= 500) {
         LARGURA = 600;
         ALTURA = 600;
     }
@@ -25,15 +24,15 @@ window.onload = function main(){
 
 }
 
-function play(){
+function play() {
     update();
     print();
     window.requestAnimationFrame(play);
 }
-function update(){
+function update() {
     frames++;
 }
-function print(){
-
+function print() {
+    alert("print");
 }
-//////////////////////////////////////////////////////////WEBSOCKET
+
