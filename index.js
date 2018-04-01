@@ -25,7 +25,7 @@ window.onload = function main() {
     document.addEventListener("keydown", function(event) {
         console.info(event.which);
         if(event.which == 80){ //p
-
+            bomb.desenha();
         }
         else if(event.which == 38){ //up
 
