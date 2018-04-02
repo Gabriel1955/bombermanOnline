@@ -24,7 +24,7 @@ window.onload = function main() {
 
     document.addEventListener("keydown", function (event) {
         console.info(event.which);
-        if (event.which == 80) { //p
+        if (event.which == 13) { //enter
             bomb.x = player1.x;
             bomb.y = player1.y;
             bomb.ativa = true;

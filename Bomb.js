@@ -1,14 +1,14 @@
 bomb = {
     x: 0,
-    y: 0,
-    height: 20,
-    width: 20,
+    y: 30,
+    height: 30,
+    width: 30,
     ativa: false,
     cor:"#0F0",
     
     desenha:function(){
-        ctx.fillStyle = this.cor;
-        ctx.fillRect (this.x,this.y, this.width,this.height);
-
+        var img = new Image();
+        img.src = "img/bomb.png";
+        ctx.drawImage(img,this.x,this.y, this.width,this.height);
     }
 }
