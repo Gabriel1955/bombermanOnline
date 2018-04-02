@@ -3,11 +3,12 @@ var speed = 4;
     player1 = {
     x: 30,
     y: 600,
-    With: 20,
-    Height: 20,
+    With: 40,
+    Height: 40,
     speed: speed,
     print: function(){
-        ctx.fillStyle = "#FFF";
-        ctx.fillRect(this.x,this.y, this.With, this.Height);
+        var img = new Image();
+        img.src = "img/play1.png";
+        ctx.drawImage(img,this.x,this.y, this.With, this.Height);
     }
 }

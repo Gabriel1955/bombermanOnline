@@ -1,42 +1,36 @@
-function teste(){
-    alert("teste")
+//create a new WebSocket object.
+var wsUri = "ws://192.168.0.102:7776/bomberman/server.php"; 	
+websocket = new WebSocket(wsUri); 
+
+websocket.onopen = function(ev) { // connection is open 
+    
 }
-function WebSocketTest()
-         {
-            if ("WebSocket" in window)
-            {
-               alert("WebSocket is supported by your Browser!");
-               
-               // Let us open a web socket
-               var ws = new WebSocket("ws://192.168.0.104:7778/bomberman/server2.php");
-				
-               ws.onopen = function()
-               {
-                  // Web Socket is connected, send data using send()
-                  ws.send("Message to send");
-                  alert("Message is sent...");
-               };
-				
-               ws.onmessage = function (evt) 
-               { 
-                  var received_msg = evt.data;
-                  alert("Message is received...");
-               };
-				
-               ws.onclose = function()
-               { 
-                  // websocket is closed.
-                  alert("Connection is closed..."); 
-               };
-					
-               window.onbeforeunload = function(event) {
-                  socket.close();
-               };
-            }
-            
-            else
-            {
-               // The browser doesn't support WebSocket
-               alert("WebSocket NOT supported by your Browser!");
-            }
-         }
+send = function(){ //use clicks message send button	
+    
+    var msg = {
+    message: "mymessage",
+    name: "myname",
+    color : '<?php echo $colours[$user_colour]; ?>'
+    };
+    //convert and send data to server
+    websocket.send(JSON.stringify(msg));
+};
+
+//#### Message received from server?
+websocket.onmessage = function(ev) {
+    var msg = JSON.parse(ev.data); //PHP sends Json data
+    var type = msg.type; //message type
+    var umsg = msg.message; //message text
+    var uname = msg.name; //user name
+    var ucolor = msg.color; //color
+
+    console.info(msg.message);
+
+};
+
+websocket.onerror	= function(ev){
+    
+} 
+websocket.onclose 	= function(ev){
+  
+}

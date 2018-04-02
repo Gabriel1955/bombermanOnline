@@ -16,7 +16,8 @@ var blocks_solid = {
        }
     },
     createNewBlock: function(x,y,Height,With){
-        ctx.fillStyle = "#000";
-        ctx.fillRect(x,y,With, Height);
+        var img = new Image();
+        img.src = "img/bloco_1.png";
+        ctx.drawImage(img,x,y,With, Height);
     }
 }
