@@ -30,22 +30,23 @@ window.onload = function main() {
             bomb.ativa = true;
             bomb.desenha();
         }
-        else if (event.which == 38) { //up
+        else if (event.which == 38 && canMoveUp(player1.x,player1.y)) { //up
             player1.y -= player1.speed;
             sendMyMove();
         }
-        else if (event.which == 40) { //down
+        else if (event.which == 40 && canMoveDown(player1.x,player1.y)) { //down
             player1.y += player1.speed;
             sendMyMove();
         }
-        else if (event.which == 37) { //left
+        else if (event.which == 37 && canMoveLeft(player1.x,player1.y)) { //left
             player1.x -= player1.speed;
             sendMyMove();
         }
-        else if (event.which == 39) { // reight
+        else if (event.which == 39 && canMoveReight(player1.x,player1.y)) { // reight
             player1.x += player1.speed;
             sendMyMove();
         }
+       
     });
     play();
 }
@@ -64,9 +65,8 @@ function print() {
 
     blocks_solid.print();
     player1.print();
-    if (bomb.ativa) {
-        bomb.print();
-    }
+    player2.print();
+    bomb.print();
 
 }
 

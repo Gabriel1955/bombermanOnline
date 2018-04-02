@@ -1,7 +1,7 @@
 
 <?php
 $countPlayers = 0;
-$host = '192.168.0.102'; //host
+$host = '172.16.165.9'; //host
 $port = '7776'; //port
 $null = null; //null var
 //Create TCP/IP sream socket
@@ -30,9 +30,16 @@ while (true) {
     perform_handshaking($header, $socket_new, $host, $port); //perform websocket handshake
 
     socket_getpeername($socket_new, $ip); //get ip address of connected socket
-    
+
     $countPlayers++;
-    $response = mask(json_encode(array('type' => 'initRound', 'message' => $ip . ' connected', 'number'=>$countPlayers))); //prepare json data
+    $response = mask(json_encode(array(
+      'status' => 'ok',
+      'type' => 'initRound',
+      'message' => $ip . ' connected',
+      'number' => $countPlayers,
+      'x' => 30,
+      'y' => 560,
+    ))); //prepare json data
     send_message($response); //notify all users about new connection
 		
 		//make room for new socket
@@ -48,18 +55,25 @@ while (true) {
       $received_text = unmask($buf); //unmask data
       $tst_msg = json_decode($received_text); //json decode 
       $message = $tst_msg->message;
-      if($message == "initRound"){
-        $countPlayers++;
-        send_message(mask(json_encode(array('type' => 'initRound','number' => $countPlayers))));
+
+      if ($tst_msg->type == "position") {
+        send_message(mask(json_encode(array(
+          'status' => 'ok',
+          'type' => $tst_msg->type,
+          'number' => $tst_msg->number,
+          'x' => $tst_msg->x,
+          'y' => $tst_msg->y,
+        ))));
       }
-      /*
-      $user_name = $tst_msg->name; //sender name
-      $user_message = $tst_msg->message; //message text
-      $user_color = $tst_msg->color; //color
-			
-			//prepare data to be sent to client
-      $response_text = mask(json_encode(array('type' => 'usermsg', 'name' => $user_name, 'message' => $user_message, 'color' => $user_color)));
-      send_message($response_text); //send data*/
+      else if($tst_msg->type == "bomb"){
+        send_message(mask(json_encode(array(
+          'status' => 'ok',
+          'type' => $tst_msg->type,
+          'number' => $tst_msg->number,
+          'x' => $tst_msg->x,
+          'y' => $tst_msg->y,
+        ))));
+      }
       break 2; //exist this loop
     }
 

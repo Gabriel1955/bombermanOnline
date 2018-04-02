@@ -1,3 +1,4 @@
+var bombsPositions = [];
 bomb = {
     x: 0,
     y: 30,
@@ -7,7 +8,8 @@ bomb = {
     cor: "#0F0",
 
     desenha: function () {
-        insertPosition(this.x, this.y);
+        insertBombPosition(this.x+10, this.y);//mais 10 pra centralizar
+        sendMyBomb(this.x, this.y);
     },
     print: function () {
         for (i = 0; i < bombsPositions.length; i++) {
@@ -20,20 +22,17 @@ bomb = {
         ctx.drawImage(img, x, y, this.width, this.height);
     }
 }
-
-var bombsPositions = [];
-insertPosition = function (x, y) {
-    bombsPositions.push(
-        {
+insertBombPosition = function (x, y) {
+    bombsPositions.push({
             x: x,
             y: y
-        }
-    )
+        })
 }
-//fazer insert e remove de bombs
-/*
-{
-    x: valor,
-    y:valor,
+sendMyBomb = function(x,y){ 
+    sendForServer({
+        type:'bomb',
+        number:player1.number,
+        x:x,
+        y:y,
+    });
 }
-*/
