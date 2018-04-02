@@ -3,12 +3,12 @@ bomb = {
     y: 0,
     height: 20,
     width: 20,
-
+    ativa: false,
     cor:"#0F0",
     
     desenha:function(){
         ctx.fillStyle = this.cor;
-        ctx.fillRect (myPosition_X,myPosition_Y, this.width,this.height);
+        ctx.fillRect (this.x,this.y, this.width,this.height);
 
     }
 }
