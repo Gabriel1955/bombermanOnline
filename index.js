@@ -28,6 +28,7 @@ window.onload = function main() {
             bomb.x = player1.x;
             bomb.y = player1.y;
             bomb.ativa = true;
+            bomb.desenha();
         }
         else if (event.which == 38) { //up
             player1.y -= player1.speed;
@@ -60,7 +61,7 @@ function print() {
     blocks_solid.print();
     player1.print();
     if (bomb.ativa) {
-        bomb.desenha();
+        bomb.print();
     }
 
 }
