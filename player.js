@@ -1,6 +1,6 @@
 var speed = 4;
 
-var player1 = {
+    player1 = {
     x: 30,
     y: 600,
     With: 20,
