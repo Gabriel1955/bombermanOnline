@@ -1,5 +1,6 @@
 
 <?php
+$countPlayers = 0;
 $host = '192.168.0.102'; //host
 $port = '7776'; //port
 $null = null; //null var
@@ -29,7 +30,9 @@ while (true) {
     perform_handshaking($header, $socket_new, $host, $port); //perform websocket handshake
 
     socket_getpeername($socket_new, $ip); //get ip address of connected socket
-    $response = mask(json_encode(array('type' => 'system', 'message' => $ip . ' connected'))); //prepare json data
+    
+    $countPlayers++;
+    $response = mask(json_encode(array('type' => 'initRound', 'message' => $ip . ' connected', 'number'=>$countPlayers))); //prepare json data
     send_message($response); //notify all users about new connection
 		
 		//make room for new socket
@@ -44,13 +47,19 @@ while (true) {
     while (socket_recv($changed_socket, $buf, 1024, 0) >= 1) {
       $received_text = unmask($buf); //unmask data
       $tst_msg = json_decode($received_text); //json decode 
+      $message = $tst_msg->message;
+      if($message == "initRound"){
+        $countPlayers++;
+        send_message(mask(json_encode(array('type' => 'initRound','number' => $countPlayers))));
+      }
+      /*
       $user_name = $tst_msg->name; //sender name
       $user_message = $tst_msg->message; //message text
       $user_color = $tst_msg->color; //color
 			
 			//prepare data to be sent to client
       $response_text = mask(json_encode(array('type' => 'usermsg', 'name' => $user_name, 'message' => $user_message, 'color' => $user_color)));
-      send_message($response_text); //send data
+      send_message($response_text); //send data*/
       break 2; //exist this loop
     }
 

@@ -5,26 +5,18 @@ websocket = new WebSocket(wsUri);
 websocket.onopen = function(ev) { // connection is open 
     
 }
-send = function(){ //use clicks message send button	
-    
-    var msg = {
-    message: "mymessage",
-    name: "myname",
-    color : '<?php echo $colours[$user_colour]; ?>'
-    };
+sendForServer = function(object){ //use clicks message send button	
     //convert and send data to server
-    websocket.send(JSON.stringify(msg));
+    websocket.send(JSON.stringify(object));
 };
 
 //#### Message received from server?
 websocket.onmessage = function(ev) {
     var msg = JSON.parse(ev.data); //PHP sends Json data
-    var type = msg.type; //message type
-    var umsg = msg.message; //message text
-    var uname = msg.name; //user name
-    var ucolor = msg.color; //color
-
-    console.info(msg.message);
+    if(msg.type == 'initRound'){
+        setPositionPlayer(x,y);
+    }
+    console.info(msg);
 
 };
 
